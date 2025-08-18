@@ -11,7 +11,7 @@ WORKDIR /app
 
 # Install Hex + Rebar
 RUN mix local.hex --force && \
-    mix local.rebar -- force
+    mix local.rebar --force
 
 # Install Phoenix project dependencies
 COPY mix.exs mix.lock ./

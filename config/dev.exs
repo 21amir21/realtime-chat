@@ -4,7 +4,7 @@ import Config
 config :realtime_chat, RealtimeChat.Repo,
   username: "postgres",
   password: "postgres",
-  hostname: "localhost",
+  hostname: "db",
   database: "realtime_chat_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,

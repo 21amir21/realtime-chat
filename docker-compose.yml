@@ -1,0 +1,33 @@
+services:
+  web:
+   build:
+    context: .
+    dockerfile: Dockerfile.dev
+   depends_on:
+    - db
+   environment:
+    MIX_ENV: dev
+    DATABASE_URL: ecto://postgres:postgres@db:5432/realtime_chat_dev
+    # SECRET_KEY_BASE: "A_SUPER_SECRET_KEY_GENERATED_ONCE"
+   volumes:
+     - .:/app
+     - /app/_build
+     - /app/deps
+     - /app/assets/node_modules
+   ports:
+     - "4000:4000"
+   command: mix phx.server
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=realtime_chat_dev
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  db_data:

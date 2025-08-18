@@ -1,0 +1,32 @@
+FROM elixir:1.16-alpine
+
+# Install dependencies
+RUN apk add --no-cache build-base git npm inotify-tools
+
+# Set environment
+ENV MIX_ENV=dev
+
+# Create app directory
+WORKDIR /app
+
+# Install Hex + Rebar
+RUN mix local.hex --force && \
+    mix local.rebar -- force
+
+# Install Phoenix project dependencies
+COPY mix.exs mix.lock ./
+COPY config config
+RUN mix deps.get
+
+# Install npm dependencies (assets)
+COPY assets/package.json assets/package-lock.json ./assets/
+RUN cd assets && npm install
+
+# Copy the rest of the app
+COPY . .
+
+# Expose Phoenix server port
+EXPOSE 4000
+
+# Default command: run Phoenix in dev
+CMD ["mix", "phx.server"]

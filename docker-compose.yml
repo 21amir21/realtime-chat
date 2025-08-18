@@ -8,7 +8,7 @@ services:
    environment:
     MIX_ENV: dev
     DATABASE_URL: ecto://postgres:postgres@db:5432/realtime_chat_dev
-    # SECRET_KEY_BASE: "A_SUPER_SECRET_KEY_GENERATED_ONCE"
+    # SECRET_KEY_BASE: "A_SUPER_SECRET_KEY_GENERATED_ONCE" # for production
    volumes:
      - .:/app
      - /app/_build
@@ -17,6 +17,7 @@ services:
    ports:
      - "4000:4000"
    command: mix phx.server
+   #  command: ["./realtime_chat/bin/realtime_chat", "start"] # for production
 
   db:
     image: postgres:15

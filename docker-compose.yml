@@ -16,7 +16,7 @@ services:
      - /app/assets/node_modules
    ports:
      - "4000:4000"
-   command: mix phx.server
+   command: sh -c "mix deps.get && mix phx.server" # for dev
    #  command: ["./realtime_chat/bin/realtime_chat", "start"] # for production
 
   db:
